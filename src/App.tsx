@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Library, Send, ChevronDown } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
 import { motion } from 'framer-motion';
+import { InfiniteSlider } from './components/ui/infinite-slider';
 
 interface Book {
   id: number;
@@ -65,8 +66,7 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
-      <section className="relative h-screen flex items-center justify-center bg-[#0B1015] text-white overflow-hidden">
+            <section className="relative h-screen flex items-center justify-center bg-[#0B1015] text-white overflow-hidden">
         <div className="absolute inset-y-0 right-0 w-full">
           <div className="flex items-center justify-center">
             <img
@@ -97,11 +97,26 @@ function App() {
           </div>
         </div>
       </section>
-
       {/* Gallery Section */}
       <section id="gallery" className="py-24 px-6 bg-[#0B1015]">
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16 relative">
+            <div className="absolute left-0 h-[40rem] w-24 z-10">
+              <InfiniteSlider direction="vertical" className="h-full" duration={35}>
+                <img src="/books/sociedade_cansaco.png" alt="Machado de Assis" className="w-24 h-24 object-cover" />
+                <img src="/books/sociedade_cansaco.png" alt="Clarice Lispector" className="w-24 h-24 object-cover" />
+                <img src="/books/sociedade_cansaco.png" alt="Guimarães Rosa" className="w-24 h-24 object-cover" />
+                <img src="/books/sociedade_cansaco.png" alt="Cecília Meireles" className="w-24 h-24 object-cover" />
+              </InfiniteSlider>
+            </div>
+            <div className="absolute right-0 h-[40rem] w-24 z-10">
+              <InfiniteSlider direction="vertical" reverse className="h-full" duration={35}>
+                <img src="/books/sociedade_cansaco.png" alt="Carlos Drummond" className="w-24 h-24 object-cover" />
+                <img src="/books/sociedade_cansaco.png" alt="Graciliano Ramos" className="w-24 h-24 object-cover" />
+                <img src="/books/sociedade_cansaco.png" alt="Jorge Amado" className="w-24 h-24 object-cover" />
+                <img src="/books/sociedade_cansaco.png" alt="Mário de Andrade" className="w-24 h-24 object-cover" />
+              </InfiniteSlider>
+            </div>
             <LampContainer className="h-[40rem] -mb-32">
               <motion.h1
                 initial={{ opacity: 0.5, y: 100 }}
@@ -125,7 +140,7 @@ function App() {
               <div key={book.id} className="group bg-[#151A20] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
                 <div className="relative h-80">
                   <img 
-                    src={book.imageUrl} 
+                    src="/books/sociedade_cansaco.png"
                     alt={book.title} 
                     className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none" 
                   />
@@ -141,7 +156,6 @@ function App() {
           </div>
         </div>
       </section>
-
       {/* Recommendation Form Section */}
       <section className="py-24 px-6 bg-[#151A20]">
         <div className="max-w-3xl mx-auto">
