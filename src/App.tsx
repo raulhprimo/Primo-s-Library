@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
-import { Library, Send, BookOpen, ChevronDown } from 'lucide-react';
+import { Library, Send, ChevronDown } from 'lucide-react';
+import { LampContainer } from './components/ui/lamp';
+import { motion } from 'framer-motion';
 
 interface Book {
   id: number;
@@ -21,19 +23,19 @@ function App() {
       id: 1,
       title: "Sociedade do Cansaço",
       author: "Byung-Chul Han",
-      imageUrl: "/books/sociedade-do-cansaco.png"
+      imageUrl: "/books/sociedade_cansaco.png"
     },
     {
       id: 2,
-      title: "O Pequeno Príncipe",
-      author: "Antoine de Saint-Exupéry",
-      imageUrl: "/books/pequeno-principe.png"
+      title: "O Homem mais rico da Babilônia",
+      author: "George S. Clason",
+      imageUrl: "/books/sociedade_cansaco.png"
     },
     {
       id: 3,
       title: "1984",
       author: "George Orwell",
-      imageUrl: "/books/1984.png"
+      imageUrl: "/books/sociedade_cansaco.png"
     }
   ]);
 
@@ -70,7 +72,7 @@ function App() {
             <img
               src="/raul.jpeg"
               alt="Raul"
-              className="w-full h-[1490px] object-cover object-center opacity-100 filter grayscale"
+              className="w-full h-[2200px] object-cover object-center opacity-100 filter grayscale"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B1015] via-[#0B1015]/80 to-[#0B1015]/60"></div>
@@ -99,10 +101,22 @@ function App() {
       {/* Gallery Section */}
       <section id="gallery" className="py-24 px-6 bg-[#0B1015]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16">
-            <BookOpen className="w-12 h-12 text-neutral-400 mx-auto mb-6" />
-            <h2 className="text-5xl font-light text-neutral-100 mb-4">Minha Biblioteca</h2>
-            <p className="text-xl text-neutral-400 max-w-2xl mx-auto font-light">
+          <div className="text-center mb-16 relative">
+            <LampContainer className="h-[40rem] -mb-32">
+              <motion.h1
+                initial={{ opacity: 0.5, y: 100 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                transition={{
+                  delay: 0.3,
+                  duration: 0.8,
+                  ease: "easeInOut",
+                }}
+                className="mt-8 bg-gradient-to-br from-neutral-100 to-neutral-200 py-4 bg-clip-text text-center text-4xl font-light tracking-tight text-transparent md:text-7xl"
+              >
+                Minha Biblioteca
+              </motion.h1>
+            </LampContainer>
+            <p className="text-xl text-neutral-400 max-w-2xl mx-auto font-light mt-32">
               Uma coleção de livros que eu já li nesses últimos anos
             </p>
           </div>
@@ -113,7 +127,7 @@ function App() {
                   <img 
                     src={book.imageUrl} 
                     alt={book.title} 
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105 filter grayscale" 
+                    className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B1015] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                     <div className="p-6">
