@@ -7,7 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: '/WebBooks/',
+  base: '/Primo-s-Library/',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
