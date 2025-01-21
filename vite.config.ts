@@ -7,7 +7,7 @@ export default defineConfig({
   optimizeDeps: {
     exclude: ['lucide-react'],
   },
-  base: '/Primo-s-Library/',
+  base: './',
   build: {
     outDir: 'dist',
     assetsDir: 'assets',
