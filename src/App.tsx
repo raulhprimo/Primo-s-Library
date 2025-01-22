@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { Library, Send, ChevronDown } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
 import { motion } from 'framer-motion';
-import { InfiniteSlider } from './components/ui/infinite-slider';
 
 interface Book {
   id: number;
@@ -30,13 +29,31 @@ function App() {
       id: 2,
       title: "O Homem mais rico da Babilônia",
       author: "George S. Clason",
-      imageUrl: "/books/sociedade_cansaco.png"
+      imageUrl: "/books/babi.jpg"
     },
     {
       id: 3,
-      title: "1984",
-      author: "George Orwell",
-      imageUrl: "/books/sociedade_cansaco.png"
+      title: "O Pai Rico, Pai Pobre",
+      author: "Robert T. Kiyosaki",
+      imageUrl: "/books/pairico.jpg"
+    },
+    {
+      id: 4,
+      title: "Como Fazer Amigos e Influenciar Pessoas",
+      author: "Dale Carnegie",
+      imageUrl: "/books/como.jpg"
+    },
+    {
+      id: 5,
+      title: "Pense Simples",
+      author: "Gustavo Caetano",
+      imageUrl: "/books/pense.jpg"
+    },
+    {
+      id: 6,
+      title: "Apologética para as questões difíceis da vida",
+      author: "William Lane Craig",
+      imageUrl: "/books/apo.jpg"
     }
   ]);
 
@@ -46,6 +63,43 @@ function App() {
     bookTitle: '',
     message: ''
   });
+
+  const quotes = [
+    {
+      text: "Há livros escritos para evitar espaços vazios na estante.",
+      author: "Carlos Drummond de Andrade"
+    },
+    {
+      text: "A leitura é uma forma de felicidade.",
+      author: "Jorge Luis Borges"
+    },
+    {
+      text: "Não existe nada mais fatal para o pensamento que o ensino das respostas certas.",
+      author: "Clarice Lispector"
+    },
+    {
+      text: "O conhecimento é a única coisa que ninguém pode tirar de você.",
+      author: "B.B. King"
+    },
+    {
+      text: "Quem lê, viaja por mares que outros navegaram.",
+      author: "Machado de Assis"
+    },
+    {
+      text: "A literatura é a arte de descobrir algo extraordinário em pessoas comuns.",
+      author: "Guimarães Rosa"
+    },
+    {
+      text: "Ler é sonhar pela mão de outrem.",
+      author: "Fernando Pessoa"
+    },
+    {
+      text: "Os livros não mudam o mundo, quem muda o mundo são as pessoas. Os livros só mudam as pessoas.",
+      author: "Mario Quintana"
+    }
+  ];
+
+  const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -72,7 +126,7 @@ function App() {
             <img
               src="/raul.jpeg"
               alt="Raul"
-              className="w-full h-[2200px] object-cover object-center opacity-100 filter grayscale"
+              className="w-full h-[1500px] object-cover object-center opacity-100 filter grayscale"
             />
           </div>
           <div className="absolute inset-0 bg-gradient-to-r from-[#0B1015] via-[#0B1015]/80 to-[#0B1015]/60"></div>
@@ -100,47 +154,44 @@ function App() {
       {/* Gallery Section */}
       <section id="gallery" className="py-24 px-6 bg-[#0B1015]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-16 relative">
-            <div className="absolute left-0 h-[40rem] w-24 z-10">
-              <InfiniteSlider direction="vertical" className="h-full" duration={35}>
-                <img src="/books/sociedade_cansaco.png" alt="Machado de Assis" className="w-24 h-24 object-cover" />
-                <img src="/books/sociedade_cansaco.png" alt="Clarice Lispector" className="w-24 h-24 object-cover" />
-                <img src="/books/sociedade_cansaco.png" alt="Guimarães Rosa" className="w-24 h-24 object-cover" />
-                <img src="/books/sociedade_cansaco.png" alt="Cecília Meireles" className="w-24 h-24 object-cover" />
-              </InfiniteSlider>
+          <div className="text-center mb-40 relative">
+            <div className="relative">
+              <LampContainer className="h-[40rem] -mb-32">
+                <div className="absolute inset-0"></div>
+              </LampContainer>
+              <div className="relative z-10">
+                <motion.h1
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{
+                    duration: 1,
+                    ease: "easeInOut",
+                  }}
+                  className="mt-[-20rem] bg-gradient-to-br from-neutral-100 to-neutral-200 py-4 bg-clip-text text-center text-4xl font-light tracking-tight text-transparent md:text-7xl"
+                >
+                  Minha Biblioteca
+                </motion.h1>
+                <motion.div
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 1, delay: 0.5 }}
+                  className="mt-8 max-w-2xl mx-auto text-center"
+                >
+                  <p className="text-neutral-400 font-light italic text-xl">"{randomQuote.text}"</p>
+                  <p className="text-neutral-600 text-sm mt-2">- {randomQuote.author}</p>
+                </motion.div>
+                <p className="pt-52 text-xl text-neutral-400 max-w-2xl mx-auto font-light">
+                  Uma coleção de livros que eu já li nesses últimos anos
+                </p>
+              </div>
             </div>
-            <div className="absolute right-0 h-[40rem] w-24 z-10">
-              <InfiniteSlider direction="vertical" reverse className="h-full" duration={35}>
-                <img src="/books/sociedade_cansaco.png" alt="Carlos Drummond" className="w-24 h-24 object-cover" />
-                <img src="/books/sociedade_cansaco.png" alt="Graciliano Ramos" className="w-24 h-24 object-cover" />
-                <img src="/books/sociedade_cansaco.png" alt="Jorge Amado" className="w-24 h-24 object-cover" />
-                <img src="/books/sociedade_cansaco.png" alt="Mário de Andrade" className="w-24 h-24 object-cover" />
-              </InfiniteSlider>
-            </div>
-            <LampContainer className="h-[40rem] -mb-32">
-              <motion.h1
-                initial={{ opacity: 0.5, y: 100 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                transition={{
-                  delay: 0.3,
-                  duration: 0.8,
-                  ease: "easeInOut",
-                }}
-                className="mt-8 bg-gradient-to-br from-neutral-100 to-neutral-200 py-4 bg-clip-text text-center text-4xl font-light tracking-tight text-transparent md:text-7xl"
-              >
-                Minha Biblioteca
-              </motion.h1>
-            </LampContainer>
-            <p className="text-xl text-neutral-400 max-w-2xl mx-auto font-light mt-32">
-              Uma coleção de livros que eu já li nesses últimos anos
-            </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {books.map((book) => (
               <div key={book.id} className="group bg-[#151A20] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                <div className="relative h-80">
+                <div className="relative h-[28rem]">
                   <img 
-                    src="/books/sociedade_cansaco.png"
+                    src={book.imageUrl}
                     alt={book.title} 
                     className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none" 
                   />
