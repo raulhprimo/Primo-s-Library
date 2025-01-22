@@ -45,8 +45,8 @@ function App() {
     },
     {
       id: 5,
-      title: "Pense Simples",
-      author: "Gustavo Caetano",
+      title: "Pense e Enriqueça",
+      author: "Napoleon Hill",
       imageUrl: "/books/pense.jpg"
     },
     {
@@ -54,6 +54,78 @@ function App() {
       title: "Apologética para as questões difíceis da vida",
       author: "William Lane Craig",
       imageUrl: "/books/apo.jpg"
+    },
+    {
+      id: 7,
+      title: "1984",
+      author: "George Orwell",
+      imageUrl: "/books/1984.jpg"
+    },
+    {
+      id: 8,
+      title: "A Arte da Guerra",
+      author: "Sun Tzu",
+      imageUrl: "/books/arte.jpg"
+    },
+    {
+      id: 9,
+      title: "Bom Dia, Espírito Santo",
+      author: "Benny Hinn",
+      imageUrl: "/books/bomdi.jpg"
+    },
+    {
+      id: 10,
+      title: "Cartas de um Diabo a seu Aprendiz",
+      author: "C.S. Lewis",
+      imageUrl: "/books/cartas.jpg"
+    },
+    {
+      id: 11,
+      title: "Cristianismo Puro e Simples",
+      author: "C.S. Lewis",
+      imageUrl: "/books/crist.jpg"
+    },
+    {
+      id: 12,
+      title: "O Divórcio",
+      author: "C.S. Lewis",
+      imageUrl: "/books/divorcio.webp"
+    },
+    {
+      id: 13,
+      title: "Discipulado",
+      author: "Dietrich Bonhoeffer",
+      imageUrl: "/books/discipulado.jpg"
+    },
+    {
+      id: 14,
+      title: "O Ego é seu Inimigo",
+      author: "Ryan Holiday",
+      imageUrl: "/books/ego.jpg"
+    },
+    {
+      id: 15,
+      title: "Pegadas do Cordeiro",
+      author: "John Cross",
+      imageUrl: "/books/pega.jpg"
+    },
+    {
+      id: 16,
+      title: "A Revolução do Propósito",
+      author: "Ken Costa",
+      imageUrl: "/books/revol.jpg"
+    },
+    {
+      id: 17,
+      title: "4 Hábitos para uma Vida Extraordinária",
+      author: "Jon Gordon",
+      imageUrl: "/books/4.jpg"
+    },
+    {
+      id: 18,
+      title: "Template social do antigo testamento",
+      author: "Landa Cofe",
+      imageUrl: "/books/template.png"
     }
   ]);
 
@@ -189,11 +261,11 @@ function App() {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {books.map((book) => (
               <div key={book.id} className="group bg-[#151A20] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                <div className="relative h-[28rem]">
+                <div className="relative h-[28rem] flex items-center justify-center overflow-hidden">
                   <img 
                     src={book.imageUrl}
                     alt={book.title} 
-                    className="w-full h-full object-cover transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none" 
+                    className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none p-4" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B1015] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
                     <div className="p-6">
