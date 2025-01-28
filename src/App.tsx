@@ -45,8 +45,8 @@ function App() {
     },
     {
       id: 5,
-      title: "Pense e Enriqueça",
-      author: "Napoleon Hill",
+      title: "Pense Simples",
+      author: "Gustavo Caetano",
       imageUrl: "/books/pense.jpg"
     },
     {
@@ -99,26 +99,26 @@ function App() {
     },
     {
       id: 14,
-      title: "O Ego é seu Inimigo",
-      author: "Ryan Holiday",
+      title: "O Ego Transformado",
+      author: "Timothy Keller",
       imageUrl: "/books/ego.jpg"
     },
     {
       id: 15,
-      title: "Pegadas do Cordeiro",
-      author: "John Cross",
+      title: "Pega Leve",
+      author: "Davi Lago",
       imageUrl: "/books/pega.jpg"
     },
     {
       id: 16,
-      title: "A Revolução do Propósito",
-      author: "Ken Costa",
+      title: "A Revolução dos Bichos",
+      author: "George Orwell",
       imageUrl: "/books/revol.jpg"
     },
     {
       id: 17,
-      title: "4 Hábitos para uma Vida Extraordinária",
-      author: "Jon Gordon",
+      title: "Os quatro amores",
+      author: "C.S. Lewis",
       imageUrl: "/books/4.jpg"
     },
     {
@@ -126,6 +126,39 @@ function App() {
       title: "Template social do antigo testamento",
       author: "Landa Cofe",
       imageUrl: "/books/template.png"
+    },
+    {
+      id: 19,
+      title: "Gatilhos Mentais",
+      author: "Gustavo Ferreira",
+      imageUrl: "/books/gatilhos-mentais.jpg"
+    },
+    {
+      id: 20,
+      title: "O Príncipe",
+      author: "Nicolau Maquiavel",
+      imageUrl: "/books/O-principe.jpg"
+    },
+
+    {
+      id: 21,
+      title: "Habitos Atômicos",
+      author: "James Clear",
+      imageUrl: "/books/habitos.jpg"
+    },
+
+    {
+      id: 22,
+      title: "Cultura da Honra",
+      author: "R.C. Sproul",
+      imageUrl: "/books/honra.jpg"
+    },
+
+    {
+      id: 23,
+      title: "O Plano Mestre do Evangelismo",
+      author: "Robert E. Coleman",
+      imageUrl: "/books/plano.jpg"
     }
   ]);
 
@@ -192,21 +225,17 @@ function App() {
 
   return (
     <div className="min-h-screen bg-white">
-            <section className="relative h-screen flex items-center justify-center bg-[#0B1015] text-white overflow-hidden">
-        <div className="absolute inset-y-0 right-0 w-full">
-          <div className="flex items-center justify-center">
-            <img
-              src="/raul.jpeg"
-              alt="Raul"
-              className="w-full h-[1500px] object-cover object-center opacity-100 filter grayscale"
-            />
-          </div>
-          <div className="absolute inset-0 bg-gradient-to-r from-[#0B1015] via-[#0B1015]/80 to-[#0B1015]/60"></div>
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0B1015] via-transparent to-[#0B1015]"></div>
-        </div>
-        <div className="relative z-10 flex flex-col md:flex-row items-start justify-between max-w-7xl mx-auto px-6 gap-12">
+      {/* Hero Section */}
+      <section className="relative min-h-screen flex items-center justify-center bg-[#0B1015] text-white overflow-hidden py-16 md:py-0">
+        <div className="relative z-10 flex flex-col md:flex-row items-start justify-between max-w-7xl mx-auto px-6 gap-12 pt-8 md:pt-0">
           <div className="text-left max-w-2xl">
-            <Library className="w-16 h-16 text-neutral-400 mb-8" />
+            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-8 ring-4 ring-neutral-800 shadow-2xl mx-auto md:mx-0">
+              <img
+                src="/raul.jpeg"
+                alt="Raul"
+                className="w-full h-full object-cover object-center filter grayscale hover:filter-none transition-all duration-300 object-[center_20%]"
+              />
+            </div>
             <h1 className="text-5xl md:text-7xl font-light mb-6 tracking-tight text-neutral-100">
               Biblioteca do Primo
             </h1>
@@ -224,11 +253,11 @@ function App() {
         </div>
       </section>
       {/* Gallery Section */}
-      <section id="gallery" className="py-24 px-6 bg-[#0B1015]">
+      <section id="gallery" className="py-12 md:py-24 px-4 md:px-6 bg-[#0B1015]">
         <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-40 relative">
+          <div className="text-center mb-20 md:mb-40 relative">
             <div className="relative">
-              <LampContainer className="h-[40rem] -mb-32">
+              <LampContainer className="h-[40rem] -mb-32 hidden md:block">
                 <div className="absolute inset-0"></div>
               </LampContainer>
               <div className="relative z-10">
@@ -239,7 +268,7 @@ function App() {
                     duration: 1,
                     ease: "easeInOut",
                   }}
-                  className="mt-[-20rem] bg-gradient-to-br from-neutral-100 to-neutral-200 py-4 bg-clip-text text-center text-4xl font-light tracking-tight text-transparent md:text-7xl"
+                  className="mt-8 md:mt-[-20rem] bg-gradient-to-br from-neutral-100 to-neutral-200 py-4 bg-clip-text text-center text-3xl md:text-4xl font-light tracking-tight text-transparent md:text-7xl"
                 >
                   Minha Biblioteca
                 </motion.h1>
@@ -247,30 +276,30 @@ function App() {
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className="mt-8 max-w-2xl mx-auto text-center"
+                  className="mt-12 md:mt-8 max-w-2xl mx-auto text-center px-4"
                 >
-                  <p className="text-neutral-400 font-light italic text-xl">"{randomQuote.text}"</p>
-                  <p className="text-neutral-600 text-sm mt-2">- {randomQuote.author}</p>
+                  <p className="text-neutral-400 font-light italic text-lg md:text-xl">"{randomQuote.text}"</p>
+                  <p className="text-neutral-600 text-sm mt-4">- {randomQuote.author}</p>
                 </motion.div>
-                <p className="pt-52 text-xl text-neutral-400 max-w-2xl mx-auto font-light">
+                <p className="pt-16 md:pt-52 text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto font-light px-4 mb-12">
                   Uma coleção de livros que eu já li nesses últimos anos
                 </p>
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
             {books.map((book) => (
               <div key={book.id} className="group bg-[#151A20] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                <div className="relative h-[28rem] flex items-center justify-center overflow-hidden">
+                <div className="relative h-[20rem] md:h-[28rem] flex items-center justify-center overflow-hidden">
                   <img 
                     src={book.imageUrl}
                     alt={book.title} 
                     className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none p-4" 
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#0B1015] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <div className="p-6">
-                      <h3 className="text-2xl font-light text-neutral-100 mb-2">{book.title}</h3>
-                      <p className="text-neutral-400 font-light">{book.author}</p>
+                    <div className="p-4 md:p-6">
+                      <h3 className="text-xl md:text-2xl font-light text-neutral-100 mb-2">{book.title}</h3>
+                      <p className="text-sm md:text-base text-neutral-400 font-light">{book.author}</p>
                     </div>
                   </div>
                 </div>
@@ -280,16 +309,16 @@ function App() {
         </div>
       </section>
       {/* Recommendation Form Section */}
-      <section className="py-24 px-6 bg-[#151A20]">
+      <section className="py-12 md:py-24 px-4 md:px-6 bg-[#151A20]">
         <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-16">
-            <Send className="w-12 h-12 text-neutral-400 mx-auto mb-6" />
-            <h2 className="text-5xl font-light text-neutral-100 mb-4">Recomende uma Obra</h2>
-            <p className="text-xl text-neutral-400 font-light">
+          <div className="text-center mb-8 md:mb-16">
+            <Send className="w-8 h-8 md:w-12 md:h-12 text-neutral-400 mx-auto mb-4 md:mb-6" />
+            <h2 className="text-3xl md:text-5xl font-light text-neutral-100 mb-3 md:mb-4">Recomende uma Obra</h2>
+            <p className="text-base md:text-xl text-neutral-400 font-light max-w-xl mx-auto px-4">
               Compartilhe suas descobertas literárias e contribua para o enriquecimento desta coleção
             </p>
           </div>
-          <form onSubmit={handleSubmit} className="space-y-8 bg-[#0B1015] p-8 rounded-xl shadow-lg">
+          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 bg-[#0B1015] p-6 md:p-8 rounded-xl shadow-lg">
             <div>
               <label htmlFor="name" className="block text-sm font-light text-neutral-400 mb-2">Nome</label>
               <input
@@ -297,7 +326,7 @@ function App() {
                 id="name"
                 value={recommendation.name}
                 onChange={(e) => setRecommendation({...recommendation, name: e.target.value})}
-                className="w-full px-4 py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
                 required
               />
             </div>
@@ -308,7 +337,7 @@ function App() {
                 id="email"
                 value={recommendation.email}
                 onChange={(e) => setRecommendation({...recommendation, email: e.target.value})}
-                className="w-full px-4 py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
                 required
               />
             </div>
@@ -319,7 +348,7 @@ function App() {
                 id="bookTitle"
                 value={recommendation.bookTitle}
                 onChange={(e) => setRecommendation({...recommendation, bookTitle: e.target.value})}
-                className="w-full px-4 py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
+                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
                 required
               />
             </div>
@@ -330,13 +359,13 @@ function App() {
                 value={recommendation.message}
                 onChange={(e) => setRecommendation({...recommendation, message: e.target.value})}
                 rows={4}
-                className="w-full px-4 py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200 resize-none"
+                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200 resize-none"
                 required
               ></textarea>
             </div>
             <button
               type="submit"
-              className="w-full bg-neutral-700 text-neutral-100 py-4 px-6 rounded-lg text-lg font-light hover:bg-neutral-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400"
+              className="w-full bg-neutral-700 text-neutral-100 py-3 md:py-4 px-4 md:px-6 rounded-lg text-base md:text-lg font-light hover:bg-neutral-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400"
             >
               Enviar Recomendação
             </button>
