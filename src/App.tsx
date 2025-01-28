@@ -1,7 +1,8 @@
-import React, { useState } from 'react';
-import { Library, Send, ChevronDown } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Library, ChevronDown } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
 import { motion } from 'framer-motion';
+import emailjs from '@emailjs/browser';
 
 interface Book {
   id: number;
@@ -10,14 +11,7 @@ interface Book {
   imageUrl: string;
 }
 
-interface BookRecommendation {
-  name: string;
-  email: string;
-  bookTitle: string;
-  message: string;
-}
-
-function App() {
+export default function App() {
   const [books] = useState<Book[]>([
     {
       id: 1,
@@ -162,12 +156,17 @@ function App() {
     }
   ]);
 
-  const [recommendation, setRecommendation] = useState<BookRecommendation>({
+  useEffect(() => {
+    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
+  }, []);
+
+  const [formData, setFormData] = useState({
     name: '',
     email: '',
-    bookTitle: '',
     message: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
+  const [isSent, setIsSent] = useState(false);
 
   const quotes = [
     {
@@ -206,16 +205,38 @@ function App() {
 
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    console.log('Recommendation submitted:', recommendation);
-    alert('Agradecemos sua recomendação. Em breve ela será analisada.');
-    setRecommendation({
-      name: '',
-      email: '',
-      bookTitle: '',
-      message: ''
-    });
+    setIsLoading(true);
+
+    try {
+      await emailjs.send(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        {
+          to_email: 'raul.primoimp@gmail.com',
+          from_name: formData.name,
+          from_email: formData.email,
+          message: formData.message,
+        },
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
+
+      setIsSent(true);
+      setFormData({ name: '', email: '', message: '' });
+    } catch (error) {
+      console.error('Erro ao enviar e-mail:', error);
+      alert('Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.');
+    }
+
+    setIsLoading(false);
+  };
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    setFormData(prev => ({
+      ...prev,
+      [e.target.name]: e.target.value
+    }));
   };
 
   const scrollToGallery = () => {
@@ -309,66 +330,72 @@ function App() {
         </div>
       </section>
       {/* Recommendation Form Section */}
-      <section className="py-12 md:py-24 px-4 md:px-6 bg-[#151A20]">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-8 md:mb-16">
-            <Send className="w-8 h-8 md:w-12 md:h-12 text-neutral-400 mx-auto mb-4 md:mb-6" />
-            <h2 className="text-3xl md:text-5xl font-light text-neutral-100 mb-3 md:mb-4">Recomende uma Obra</h2>
-            <p className="text-base md:text-xl text-neutral-400 font-light max-w-xl mx-auto px-4">
-              Compartilhe suas descobertas literárias e contribua para o enriquecimento desta coleção
-            </p>
-          </div>
-          <form onSubmit={handleSubmit} className="space-y-6 md:space-y-8 bg-[#0B1015] p-6 md:p-8 rounded-xl shadow-lg">
+      <section className="py-24 bg-neutral-100">
+        <div className="max-w-4xl mx-auto px-6">
+          <h2 className="text-3xl md:text-4xl font-light mb-8 text-center">Recomende uma Obra</h2>
+          <p className="text-neutral-600 text-center mb-12">
+            Tem alguma sugestão de livro? Compartilhe comigo!
+          </p>
+
+          <form onSubmit={handleSubmit} className="space-y-6">
             <div>
-              <label htmlFor="name" className="block text-sm font-light text-neutral-400 mb-2">Nome</label>
+              <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
+                Nome
+              </label>
               <input
                 type="text"
                 id="name"
-                value={recommendation.name}
-                onChange={(e) => setRecommendation({...recommendation, name: e.target.value})}
-                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
+                name="name"
+                value={formData.name}
+                onChange={handleChange}
                 required
+                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
+
             <div>
-              <label htmlFor="email" className="block text-sm font-light text-neutral-400 mb-2">Email</label>
+              <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
+                E-mail
+              </label>
               <input
                 type="email"
                 id="email"
-                value={recommendation.email}
-                onChange={(e) => setRecommendation({...recommendation, email: e.target.value})}
-                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
+                name="email"
+                value={formData.email}
+                onChange={handleChange}
                 required
+                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
               />
             </div>
+
             <div>
-              <label htmlFor="bookTitle" className="block text-sm font-light text-neutral-400 mb-2">Título da Obra</label>
-              <input
-                type="text"
-                id="bookTitle"
-                value={recommendation.bookTitle}
-                onChange={(e) => setRecommendation({...recommendation, bookTitle: e.target.value})}
-                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200"
-                required
-              />
-            </div>
-            <div>
-              <label htmlFor="message" className="block text-sm font-light text-neutral-400 mb-2">Por que recomenda esta obra?</label>
+              <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1">
+                Mensagem
+              </label>
               <textarea
                 id="message"
-                value={recommendation.message}
-                onChange={(e) => setRecommendation({...recommendation, message: e.target.value})}
-                rows={4}
-                className="w-full px-3 md:px-4 py-2 md:py-3 rounded-lg bg-[#1A2027] border-0 text-neutral-100 placeholder-neutral-500 focus:ring-2 focus:ring-neutral-400 focus:border-transparent transition-shadow duration-200 resize-none"
+                name="message"
+                value={formData.message}
+                onChange={handleChange}
                 required
-              ></textarea>
+                rows={4}
+                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
+              />
             </div>
-            <button
-              type="submit"
-              className="w-full bg-neutral-700 text-neutral-100 py-3 md:py-4 px-4 md:px-6 rounded-lg text-base md:text-lg font-light hover:bg-neutral-600 transition-colors duration-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-neutral-400"
-            >
-              Enviar Recomendação
-            </button>
+
+            <div className="flex justify-center">
+              <button
+                type="submit"
+                disabled={isLoading || isSent}
+                className={`px-8 py-3 rounded-lg text-white font-medium transition-all ${
+                  isSent
+                    ? 'bg-green-500 hover:bg-green-600'
+                    : 'bg-blue-500 hover:bg-blue-600'
+                } disabled:opacity-50 disabled:cursor-not-allowed`}
+              >
+                {isLoading ? 'Enviando...' : isSent ? 'Mensagem Enviada!' : 'Enviar Mensagem'}
+              </button>
+            </div>
           </form>
         </div>
       </section>
@@ -391,5 +418,3 @@ function App() {
     </div>
   );
 }
-
-export default App;
