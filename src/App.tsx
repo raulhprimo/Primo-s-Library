@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react';
-import { Library, ChevronDown, Sparkles, Star, Quote } from 'lucide-react';
+import { Library, ChevronDown, Star, Quote } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Pagination } from './components/ui/pagination';
@@ -227,9 +227,9 @@ export default function App() {
               className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-8 ring-4 ring-neutral-800 shadow-2xl mx-auto md:mx-0"
             >
               <img
-                src="/raul.jpeg"
+                src="/raul_laranja.jpeg"
                 alt="Raul"
-                className="w-full h-full object-cover object-center filter grayscale hover:filter-none transition-all duration-300 object-[center_30%]"
+                className="w-full h-full object-cover object-center  hover:filter-none transition-all duration-300 object-[center_20%]"
               />
             </motion.div>
             <motion.h1
@@ -267,7 +267,7 @@ export default function App() {
             transition={{ duration: 0.8 }}
             className="absolute top-10 right-10 text-neutral-400"
           >
-            <Sparkles className="w-6 h-6 animate-pulse" />
+            <Star className="w-6 h-6 text-orange-400 animate-pulse" />
           </motion.div>
         </motion.div>
       </section>
