@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
-import { Library, ChevronDown } from 'lucide-react';
+import React, { useState, useMemo } from 'react';
+import { Library, ChevronDown, Sparkles } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
-import { motion } from 'framer-motion';
-import emailjs from '@emailjs/browser';
+import { motion, AnimatePresence } from 'framer-motion';
+import { Pagination } from './components/ui/pagination';
 
 interface Book {
   id: number;
@@ -156,17 +156,15 @@ export default function App() {
     }
   ]);
 
-  useEffect(() => {
-    emailjs.init(import.meta.env.VITE_EMAILJS_PUBLIC_KEY);
-  }, []);
+  const [currentPage, setCurrentPage] = useState(1);
+  const booksPerPage = 6;
 
-  const [formData, setFormData] = useState({
-    name: '',
-    email: '',
-    message: ''
-  });
-  const [isLoading, setIsLoading] = useState(false);
-  const [isSent, setIsSent] = useState(false);
+  const paginatedBooks = useMemo(() => {
+    const startIndex = (currentPage - 1) * booksPerPage;
+    return books.slice(startIndex, startIndex + booksPerPage);
+  }, [books, currentPage]);
+
+  const totalPages = Math.ceil(books.length / booksPerPage);
 
   const quotes = [
     {
@@ -205,40 +203,6 @@ export default function App() {
 
   const randomQuote = quotes[Math.floor(Math.random() * quotes.length)];
 
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    setIsLoading(true);
-
-    try {
-      await emailjs.send(
-        import.meta.env.VITE_EMAILJS_SERVICE_ID,
-        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
-        {
-          to_email: 'raul.primoimp@gmail.com',
-          from_name: formData.name,
-          from_email: formData.email,
-          message: formData.message,
-        },
-        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
-      );
-
-      setIsSent(true);
-      setFormData({ name: '', email: '', message: '' });
-    } catch (error) {
-      console.error('Erro ao enviar e-mail:', error);
-      alert('Ocorreu um erro ao enviar sua mensagem. Por favor, tente novamente.');
-    }
-
-    setIsLoading(false);
-  };
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    setFormData(prev => ({
-      ...prev,
-      [e.target.name]: e.target.value
-    }));
-  };
-
   const scrollToGallery = () => {
     const gallerySection = document.getElementById('gallery');
     gallerySection?.scrollIntoView({ behavior: 'smooth' });
@@ -248,30 +212,63 @@ export default function App() {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative min-h-screen flex items-center justify-center bg-[#0B1015] text-white overflow-hidden py-16 md:py-0">
-        <div className="relative z-10 flex flex-col md:flex-row items-start justify-between max-w-7xl mx-auto px-6 gap-12 pt-8 md:pt-0">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="relative z-10 flex flex-col md:flex-row items-start justify-between max-w-7xl mx-auto px-6 gap-12 pt-8 md:pt-0"
+        >
           <div className="text-left max-w-2xl">
-            <div className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-8 ring-4 ring-neutral-800 shadow-2xl mx-auto md:mx-0">
+            <motion.div
+              initial={{ scale: 0 }}
+              animate={{ scale: 1 }}
+              transition={{ duration: 0.5 }}
+              className="w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden mb-8 ring-4 ring-neutral-800 shadow-2xl mx-auto md:mx-0"
+            >
               <img
                 src="/raul.jpeg"
                 alt="Raul"
-                className="w-full h-full object-cover object-center filter grayscale hover:filter-none transition-all duration-300 object-[center_20%]"
+                className="w-full h-full object-cover object-center filter grayscale hover:filter-none transition-all duration-300 object-[center_30%]"
               />
-            </div>
-            <h1 className="text-5xl md:text-7xl font-light mb-6 tracking-tight text-neutral-100">
+            </motion.div>
+            <motion.h1
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.2 }}
+              className="text-5xl md:text-7xl font-light mb-6 tracking-tight text-neutral-100"
+            >
               Biblioteca do Primo
-            </h1>
-            <p className="text-xl mb-12 text-neutral-400 leading-relaxed font-light">
+            </motion.h1>
+            <motion.p
+              initial={{ opacity: 0, x: -20 }}
+              animate={{ opacity: 1, x: 0 }}
+              transition={{ duration: 0.8, delay: 0.4 }}
+              className="text-xl mb-12 text-neutral-400 leading-relaxed font-light"
+            >
               Um espaço para compartilhar conhecimento obtido através da leitura, e onde você pode contribuir compartilhando conhecimento :)
-            </p>
-            <button
+            </motion.p>
+            <motion.button
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8, delay: 0.6 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               onClick={scrollToGallery}
               className="group flex items-center gap-2 text-neutral-400 hover:text-neutral-200 transition-colors duration-300"
             >
               <span className="text-lg font-light">Explorar Biblioteca</span>
               <ChevronDown className="w-5 h-5 animate-bounce" />
-            </button>
+            </motion.button>
           </div>
-        </div>
+          <motion.div
+            initial={{ opacity: 0, scale: 0.8 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.8 }}
+            className="absolute top-10 right-10 text-neutral-400"
+          >
+            <Sparkles className="w-6 h-6 animate-pulse" />
+          </motion.div>
+        </motion.div>
       </section>
       {/* Gallery Section */}
       <section id="gallery" className="py-12 md:py-24 px-4 md:px-6 bg-[#0B1015]">
@@ -308,101 +305,60 @@ export default function App() {
               </div>
             </div>
           </div>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10">
-            {books.map((book) => (
-              <div key={book.id} className="group bg-[#151A20] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300">
-                <div className="relative h-[20rem] md:h-[28rem] flex items-center justify-center overflow-hidden">
-                  <img 
-                    src={book.imageUrl}
-                    alt={book.title} 
-                    className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none p-4" 
-                  />
-                  <div className="absolute inset-0 bg-gradient-to-t from-[#0B1015] to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end">
-                    <div className="p-4 md:p-6">
-                      <h3 className="text-xl md:text-2xl font-light text-neutral-100 mb-2">{book.title}</h3>
-                      <p className="text-sm md:text-base text-neutral-400 font-light">{book.author}</p>
-                    </div>
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.8 }}
+            className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-10"
+          >
+            <AnimatePresence mode="wait">
+              {paginatedBooks.map((book) => (
+                <motion.div
+                  key={book.id}
+                  initial={{ opacity: 0, scale: 0.9 }}
+                  animate={{ opacity: 1, scale: 1 }}
+                  exit={{ opacity: 0, scale: 0.9 }}
+                  transition={{ duration: 0.3 }}
+                  className="group bg-[#151A20] rounded-xl shadow-lg overflow-hidden transform hover:-translate-y-2 transition-all duration-300"
+                >
+                  <div className="relative h-[20rem] md:h-[28rem] flex items-center justify-center overflow-hidden">
+                    <img 
+                      src={book.imageUrl}
+                      alt={book.title} 
+                      className="w-full h-full object-contain transition-all duration-300 group-hover:scale-105 filter grayscale group-hover:filter-none p-4" 
+                    />
+                    <motion.div
+                      initial={{ opacity: 0 }}
+                      whileHover={{ opacity: 1 }}
+                      className="absolute inset-0 bg-gradient-to-t from-[#0B1015] to-transparent transition-opacity duration-300 flex items-end"
+                    >
+                      <div className="p-4 md:p-6">
+                        <h3 className="text-xl md:text-2xl font-light text-neutral-100 mb-2">{book.title}</h3>
+                        <p className="text-sm md:text-base text-neutral-400 font-light">{book.author}</p>
+                      </div>
+                    </motion.div>
                   </div>
-                </div>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-      {/* Recommendation Form Section */}
-      <section className="py-24 bg-neutral-100">
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-3xl md:text-4xl font-light mb-8 text-center">Recomende uma Obra</h2>
-          <p className="text-neutral-600 text-center mb-12">
-            Tem alguma sugestão de livro? Compartilhe comigo!
-          </p>
-
-          <form onSubmit={handleSubmit} className="space-y-6">
-            <div>
-              <label htmlFor="name" className="block text-sm font-medium text-neutral-700 mb-1">
-                Nome
-              </label>
-              <input
-                type="text"
-                id="name"
-                name="name"
-                value={formData.name}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="email" className="block text-sm font-medium text-neutral-700 mb-1">
-                E-mail
-              </label>
-              <input
-                type="email"
-                id="email"
-                name="email"
-                value={formData.email}
-                onChange={handleChange}
-                required
-                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div>
-              <label htmlFor="message" className="block text-sm font-medium text-neutral-700 mb-1">
-                Mensagem
-              </label>
-              <textarea
-                id="message"
-                name="message"
-                value={formData.message}
-                onChange={handleChange}
-                required
-                rows={4}
-                className="w-full px-4 py-2 border border-neutral-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent"
-              />
-            </div>
-
-            <div className="flex justify-center">
-              <button
-                type="submit"
-                disabled={isLoading || isSent}
-                className={`px-8 py-3 rounded-lg text-white font-medium transition-all ${
-                  isSent
-                    ? 'bg-green-500 hover:bg-green-600'
-                    : 'bg-blue-500 hover:bg-blue-600'
-                } disabled:opacity-50 disabled:cursor-not-allowed`}
-              >
-                {isLoading ? 'Enviando...' : isSent ? 'Mensagem Enviada!' : 'Enviar Mensagem'}
-              </button>
-            </div>
-          </form>
+                </motion.div>
+              ))}
+            </AnimatePresence>
+          </motion.div>
+          
+          <Pagination
+            currentPage={currentPage}
+            totalPages={totalPages}
+            onPageChange={setCurrentPage}
+          />
         </div>
       </section>
 
       {/* Footer */}
       <footer className="bg-[#0B1015] text-white py-12">
-        <div className="max-w-7xl mx-auto px-6">
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.8 }}
+          className="max-w-7xl mx-auto px-6"
+        >
           <div className="flex flex-col items-center justify-center">
             <Library className="w-12 h-12 text-neutral-400 mb-6" />
             <h3 className="text-2xl font-light text-neutral-100 mb-4">Biblioteca do Primo</h3>
@@ -413,7 +369,7 @@ export default function App() {
               &copy; {new Date().getFullYear()} Biblioteca do Primo. Todos os direitos reservados.
             </p>
           </div>
-        </div>
+        </motion.div>
       </footer>
     </div>
   );
