@@ -1,8 +1,9 @@
 import React, { useState, useMemo } from 'react';
-import { Library, ChevronDown, Sparkles } from 'lucide-react';
+import { Library, ChevronDown, Sparkles, Star, Quote } from 'lucide-react';
 import { LampContainer } from './components/ui/lamp';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Pagination } from './components/ui/pagination';
+import SparklesBackground from './components/ui/sparkles-background';
 
 interface Book {
   id: number;
@@ -276,9 +277,18 @@ export default function App() {
           <div className="text-center mb-20 md:mb-40 relative">
             <div className="relative">
               <LampContainer className="h-[40rem] -mb-32 hidden md:block">
-                <div className="absolute inset-0"></div>
+                <div className="absolute inset-0">
+                  <SparklesBackground />
+                </div>
               </LampContainer>
               <div className="relative z-10">
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="flex items-center justify-center gap-4 mb-8"
+                >
+                </motion.div>
+
                 <motion.h1
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
@@ -290,18 +300,48 @@ export default function App() {
                 >
                   Minha Biblioteca
                 </motion.h1>
+
                 <motion.div
                   initial={{ opacity: 0 }}
                   animate={{ opacity: 1 }}
                   transition={{ duration: 1, delay: 0.5 }}
-                  className="mt-12 md:mt-8 max-w-2xl mx-auto text-center px-4"
+                  className="mt-12 md:mt-8 max-w-2xl mx-auto text-center px-4 relative"
                 >
-                  <p className="text-neutral-400 font-light italic text-lg md:text-xl">"{randomQuote.text}"</p>
-                  <p className="text-neutral-600 text-sm mt-4">- {randomQuote.author}</p>
+                  <motion.div
+                    animate={{ rotate: -360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -left-8 top-0 text-neutral-500 opacity-20 hidden md:block"
+                  >
+                    <Quote className="w-12 h-12 md:w-16 md:h-16" />
+                  </motion.div>
+                  <p className="text-neutral-400 font-light italic text-lg md:text-xl relative">
+                    "{randomQuote.text}"
+                  </p>
+                  <motion.div
+                    animate={{ rotate: 360 }}
+                    transition={{ duration: 20, repeat: Infinity, ease: "linear" }}
+                    className="absolute -right-8 bottom-0 text-neutral-500 opacity-20 hidden md:block"
+                  >
+                    <Quote className="w-12 h-12 md:w-16 md:h-16" />
+                  </motion.div>
+                  <div className="flex items-center justify-center gap-1 md:gap-2 mt-4">
+                    <Star className="w-3 h-3 md:w-4 md:h-4 text-yellow-500" />
+                    <p className="text-neutral-600 text-xs md:text-sm">- {randomQuote.author}</p>
+                    <Star className="w-3 h-3 md:w-4 md:h-4 text-yellow-500" />
+                  </div>
                 </motion.div>
-                <p className="pt-16 md:pt-52 text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto font-light px-4 mb-12">
-                  Uma coleção de livros que eu já li nesses últimos anos
-                </p>
+
+                <motion.div
+                  initial={{ opacity: 0, y: 20 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ duration: 0.8, delay: 0.8 }}
+                  className="relative px-4 md:px-0"
+                >
+                  <div className="absolute inset-0 bg-gradient-to-r from-transparent via-neutral-500/10 to-transparent blur-xl"></div>
+                  <p className="pt-16 md:pt-52 text-lg md:text-xl text-neutral-400 max-w-2xl mx-auto font-light relative">
+                    Uma coleção de livros que eu já li nesses últimos anos
+                  </p>
+                </motion.div>
               </div>
             </div>
           </div>
